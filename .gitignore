@@ -5,3 +5,7 @@ datasets/*.bin
 src/baseline_log.json
 src/chain.jsonl
 datasets/*/
+experiments/_bench_*
+experiments/_tamper_scratch/
+experiments/results.csv
+experiments/tamper_results.csv

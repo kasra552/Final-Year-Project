@@ -129,6 +129,10 @@ def plot_storage(rows):
     fig, ax = plt.subplots(figsize=(7, 4.5))
     ax.bar([i - width/2 for i in x], checksum_sizes, width, label="checksum")
     ax.bar([i + width/2 for i in x], blockchain_sizes, width, label="blockchain")
+    
+    for i, (c, b) in enumerate(zip(checksum_sizes, blockchain_sizes)):
+        ax.text(i - width/2, c + 5, f"{c:.0f}", ha="center", fontsize=8)
+        ax.text(i + width/2, b + 5, f"{b:.0f}", ha="center", fontsize=8)
 
     ax.set_xticks(list(x))
     ax.set_xticklabels([f"{b} KB" for b in buckets])

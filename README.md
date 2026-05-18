@@ -6,7 +6,7 @@ empirical evaluation of throughput, verification latency, storage
 overhead, and tamper detection across five tamper scenarios.
 
 Author: Kasra Moein (URN 6845307)
-Supervisor: [supervisor name]
+Supervisor: Professor Steve Schneider
 Module: COM3001 Professional Project, University of Surrey, 2025–26
 
 ## Repository structure
@@ -52,25 +52,32 @@ blockchain detects the tamper.
 ## Dataset
 
 `datasets/generate_files.py` produces 180 random-content binary files
-across five size buckets (1 KB, 10 KB, 100 KB, 1 MB, 10 MB) using a
-fixed seed. Re-running the script is idempotent — regenerated files
-are byte-identical to the originals.
+across five size buckets (50 × 1 KB, 50 × 10 KB, 50 × 100 KB, 20 × 1 MB,
+10 × 10 MB) using a fixed seed. Re-running the script is idempotent —
+regenerated files are byte-identical to the originals.
 
 ## Key findings
 
-See dissertation chapter 5 for full evaluation. Summary:
+See dissertation Chapter 6 (Results and Analysis) for the full evaluation.
+Summary:
 
-- **Tamper detection**: The blockchain detects scenarios T1–T4, including
-  T2 (file + log modified) which defeats the baseline. Both systems
-  miss T5 (full-chain forge) — a known limitation of single-machine
-  blockchains without distributed consensus.
-- **Verification latency**: The blockchain imposes ~0.5–1 ms overhead
-  over the baseline at small file sizes, diminishing to within
-  measurement noise at ≥1 MB per file where SHA-256 hashing dominates.
-- **Storage overhead**: The blockchain uses ~400 bytes per entry vs
-  ~155 bytes for the baseline — a 2.6× factor, constant across file
-  sizes.
+- **Tamper detection.** The blockchain detects scenarios T1–T4, including
+  T2 (file and log modified consistently), which defeats the baseline.
+  Both systems miss T5 (full chain re-forge) — the predicted limit of any
+  single-host chain whose head is not externally anchored to a separate
+  trusted location.
+- **Ingest overhead.** The blockchain is +1.4 % to +29.9 % slower than the
+  baseline depending on file size, with the overhead largest at 100 KB and
+  falling at 1 MB and 10 MB as fixed per-block construction costs are
+  amortised by per-byte file hashing.
+- **Verification overhead.** The blockchain adds approximately 0.5–1.2 ms
+  over the baseline at small file sizes (+7.9 % to +12.2 %), diminishing
+  to within measurement noise at file sizes of 1 MB and above where
+  SHA-256 file hashing dominates.
+- **Storage overhead.** The blockchain uses approximately 400 bytes per
+  entry against approximately 155 bytes for the baseline — a 2.6× factor
+  that is essentially constant across the file-size range tested.
 
 ## License
 
-Academic use only (University of Surrey coursework).
+Academic use only (University of Surrey, Professional Project, COM3001).
